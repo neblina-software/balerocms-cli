@@ -9,41 +9,38 @@
 
 package com.balerocms.classses;
 
-import java.io.*;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Properties;
 
 public class ConfigEditor {
 
-    public static String readFile(String filename) throws IOException {
-        File file = new File(filename);
-        int len = (int) file.length();
-        byte[] bytes = new byte[len];
-        FileInputStream fis = null;
-        try {
-            fis = new FileInputStream(file);
-            assert len == fis.read(bytes);
-        } catch (IOException e) {
-            close(fis);
-            throw e;
-        }
-        return new String(bytes, "UTF-8");
-    }
+    private static final Logger log = LogManager.getLogger(ConfigEditor.class.getName());
 
-    public static void writeFile(String filename, String text) throws IOException {
-        FileOutputStream fos = null;
-        try {
-            fos = new FileOutputStream(filename);
-            fos.write(text.getBytes("UTF-8"));
-        } catch (IOException e) {
-            close(fos);
-            throw e;
-        }
-    }
+   public void setProperty(String property, String newValue) throws IOException {
+       FileInputStream in = new FileInputStream(System.getProperty("user.dir") + "/updates/test/application.properties");
+       Properties props = new Properties();
+       props.load(in);
+       in.close();
 
-    public static void close(Closeable closeable) {
-        try {
-            closeable.close();
-        } catch(IOException ignored) {
-        }
+       FileOutputStream out = new FileOutputStream(System.getProperty("user.dir") + "/updates/test/application.properties");
+       props.setProperty(property, newValue);
+       props.store(out, null);
+       out.close();
+   }
+
+    public String getProperty(String property) throws IOException {
+        String value = null;
+        FileInputStream in = new FileInputStream(System.getProperty("user.dir") + "/updates/test/application.properties");
+        Properties props = new Properties();
+        props.load(in);
+        value = props.getProperty(property);
+        in.close();
+        return value;
     }
 
 }

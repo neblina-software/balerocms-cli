@@ -10,12 +10,13 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
 @SpringApplicationConfiguration(classes = BalerocmsCliApplication)
 class ConfigEditorTests {
 
+
 	@Test
-	void write() {
-		System.out.println("Writing File...");
-		String path = System.getProperty("user.dir") + "/updates/test/application.properties";
+	void changeValue() {
+		String random = Math.random();
 		ConfigEditor configEditor = new ConfigEditor();
-		configEditor.writeFile(path, "Done!");
+		configEditor.setProperty("example.value", random);
+		System.out.println("example.value=" + configEditor.getProperty("example.value"));
 	}
 
 }
