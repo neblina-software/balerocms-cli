@@ -19,15 +19,21 @@ import java.util.Properties;
 
 public class ConfigEditor {
 
+    private String input = System.getProperty("user.dir") +
+            "/src/main/resources/config/application.properties";
+
+    private String output = System.getProperty("user.dir") +
+            "/updates/balerocms-enterprise-test/src/main/resources/config/application.properties";
+
     private static final Logger log = LogManager.getLogger(ConfigEditor.class.getName());
 
    public void setProperty(String property, String newValue) throws IOException {
-       FileInputStream in = new FileInputStream(System.getProperty("user.dir") + "/updates/test/application.properties");
+       FileInputStream in = new FileInputStream(input);
        Properties props = new Properties();
        props.load(in);
        in.close();
 
-       FileOutputStream out = new FileOutputStream(System.getProperty("user.dir") + "/updates/test/application.properties");
+       FileOutputStream out = new FileOutputStream(output);
        props.setProperty(property, newValue);
        props.store(out, null);
        out.close();
@@ -35,7 +41,7 @@ public class ConfigEditor {
 
     public String getProperty(String property) throws IOException {
         String value = null;
-        FileInputStream in = new FileInputStream(System.getProperty("user.dir") + "/updates/test/application.properties");
+        FileInputStream in = new FileInputStream(input);
         Properties props = new Properties();
         props.load(in);
         value = props.getProperty(property);

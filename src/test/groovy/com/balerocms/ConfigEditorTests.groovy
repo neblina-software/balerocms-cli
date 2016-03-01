@@ -16,7 +16,7 @@ class ConfigEditorTests {
 		String random = Math.random();
 		ConfigEditor configEditor = new ConfigEditor();
 		configEditor.setProperty("example.value", random);
-		System.out.println("example.value=" + configEditor.getProperty("example.value"));
+		System.out.println("production.value=" + configEditor.getProperty("production.value"));
 	}
 
 }
