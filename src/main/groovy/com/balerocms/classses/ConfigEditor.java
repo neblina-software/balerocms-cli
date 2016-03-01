@@ -28,6 +28,7 @@ public class ConfigEditor {
     private static final Logger log = LogManager.getLogger(ConfigEditor.class.getName());
 
    public void setProperty(String property, String newValue) throws IOException {
+       log.debug("Setting Property");
        FileInputStream in = new FileInputStream(input);
        Properties props = new Properties();
        props.load(in);
